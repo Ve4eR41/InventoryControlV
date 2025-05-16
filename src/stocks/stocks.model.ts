@@ -1,8 +1,6 @@
-import { BelongsToMany, Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { Role } from "../roles/roles.model";
-import { UserRoles } from "../roles/user-roles.model";
-import { Post } from "../posts/posts.model";
+import { Shipments } from "src/shipments/shipments.model";
 
 interface StocksCreationAttrs {
     createDate: string;
@@ -18,6 +16,7 @@ interface StocksCreationAttrs {
 @Table({ tableName: 'stocks' })
 export class Stocks extends Model<Stocks, StocksCreationAttrs> {
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
+    @PrimaryKey
     @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
     id: number;
 
@@ -62,4 +61,8 @@ export class Stocks extends Model<Stocks, StocksCreationAttrs> {
     @ApiProperty({ example: '8', description: 'Цена доставки за ед товара' })
     @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
     deliveryPrice: number;
+
+    
+    @HasMany(() => Shipments)
+    shipments: Shipments[]
 }

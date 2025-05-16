@@ -9,7 +9,7 @@ import { RolesGuard } from "../auth/roles.guard";
 import { ValidationPipe } from "../pipes/validation.pipe";
 import { get } from 'http';
 
-@ApiTags('Пользователи')
+@ApiTags('///')
 @Controller('stocks')
 export class StocksController {
 
@@ -30,7 +30,7 @@ export class StocksController {
     @ApiResponse({ status: 200, type: [Stocks] })
     @Get("/all")
     getAll() {
-        return this.stocksService.getAllStocks()
+        return this.stocksService.getAll()
     }
 
 
@@ -39,7 +39,7 @@ export class StocksController {
     @ApiResponse({ status: 200, type: [Stocks] })
     @Post()
     create(@Body() dto: CreateStocksDto[]) {
-        return this.stocksService.createStocks(dto)
+        return this.stocksService.create(dto)
     }
 
 
@@ -48,7 +48,7 @@ export class StocksController {
     @ApiResponse({ status: 200, type: [Stocks] })
     @Post('/destroy')
     destroy() {
-        return this.stocksService.destroyStocks()
+        return this.stocksService.destroy()
     }
 
 
@@ -58,6 +58,15 @@ export class StocksController {
     @Get('/pricePer')
     getAvgPrice() {
         return this.stocksService.getPricePer()
+    }
+
+
+
+    @ApiOperation({ summary: '...' })
+    @ApiResponse({ status: 200, type: [Stocks] })
+    @Get('/freeComponents')
+    getFreeComponent() {
+        return this.stocksService.getFreeComponent()
     }
 
 }

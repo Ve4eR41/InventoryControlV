@@ -5,12 +5,13 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { Stocks } from "./stocks.model";
 import { RolesModule } from "../roles/roles.module";
 import { AuthModule } from "../auth/auth.module";
+import { Shipments } from 'src/shipments/shipments.model';
 
 @Module({
     controllers: [StocksController],
     providers: [StocksService],
     imports: [
-        SequelizeModule.forFeature([Stocks]),
+        SequelizeModule.forFeature([Stocks, Shipments]),
         RolesModule,
         forwardRef(() => AuthModule),
     ],

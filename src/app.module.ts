@@ -1,28 +1,33 @@
-import {Module} from "@nestjs/common";
-import {SequelizeModule} from "@nestjs/sequelize";
+import { Module } from "@nestjs/common";
+import { SequelizeModule } from "@nestjs/sequelize";
 import { UsersModule } from './users/users.module';
-import {ConfigModule} from "@nestjs/config";
-import {User} from "./users/users.model";
+import { ConfigModule } from "@nestjs/config";
+import { User } from "./users/users.model";
 import { RolesModule } from './roles/roles.module';
-import {Role} from "./roles/roles.model";
-import {UserRoles} from "./roles/user-roles.model";
+import { Role } from "./roles/roles.model";
+import { UserRoles } from "./roles/user-roles.model";
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import {Post} from "./posts/posts.model";
+import { Post } from "./posts/posts.model";
 import { FilesModule } from './files/files.module';
-import {ServeStaticModule} from "@nestjs/serve-static";
+import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from 'path';
 import { StocksModule } from "./stocks/stocks.module";
+import { ShipmentsService } from './shipments/shipments.service';
+import { ShipmentsController } from './shipments/shipments.controller';
+import { ShipmentsModule } from './shipments/shipments.module';
+import { Stocks } from "./stocks/stocks.model";
+import { Shipments } from "./shipments/shipments.model";
 
 @Module({
     controllers: [],
     providers: [],
     imports: [
         ConfigModule.forRoot({
-           envFilePath: `.${process.env.NODE_ENV}.env`
+            envFilePath: `.${process.env.NODE_ENV}.env`
         }),
         ServeStaticModule.forRoot({
-            rootPath: path.resolve( __dirname, 'static'),
+            rootPath: path.resolve(__dirname, 'static'),
         }),
         SequelizeModule.forRoot({
             dialect: 'postgres',
@@ -31,7 +36,7 @@ import { StocksModule } from "./stocks/stocks.module";
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRESS_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Post],
+            models: [User, Role, UserRoles, Post, Shipments, Stocks],
             autoLoadModels: true
         }),
         UsersModule,
@@ -40,6 +45,7 @@ import { StocksModule } from "./stocks/stocks.module";
         AuthModule,
         PostsModule,
         FilesModule,
+        ShipmentsModule
     ]
 })
-export class AppModule {}
+export class AppModule { }
