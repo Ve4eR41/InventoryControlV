@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./auth/jwt-auth.guard";
 import { ValidationPipe } from "./pipes/validation.pipe";
+import helmet from "helmet";
 
 
 async function start() {
@@ -21,6 +22,7 @@ async function start() {
     SwaggerModule.setup('/api/docs', app, document)
 
     app.useGlobalPipes(new ValidationPipe())
+    app.use(helmet())
 
 
     await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`))
