@@ -25,6 +25,7 @@ export class StocksService {
 
 
     async create(dto: CreateStocksDto[]) {
+        console.log(dto)
         const stocks = await this.stocksRepository.bulkCreate(dto);
         return stocks;
     }
